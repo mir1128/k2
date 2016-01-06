@@ -22,8 +22,7 @@ public class K2Controller {
     @ResponseBody
     public ResponseEntity<String> register(@PathVariable("who") String who) {
 
-        UserBoardStatus userBoardStatus = new UserBoardStatus(who, new Date(), "sdfdsf");
-        userBoardStatusRepository.save(userBoardStatus);
+
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

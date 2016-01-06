@@ -1,6 +1,10 @@
 package org.k2.model;
 
+import org.springframework.expression.spel.ast.Literal;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -15,6 +19,15 @@ public class K2ChessBoard {
 
     public K2ChessBoard() {
         init();
+    }
+
+    public K2ChessBoard(String boardString) {
+        List<String> numbers = Arrays.asList(boardString.split(","));
+        for (int row = 0; row < 4; ++row ) {
+            for (int column = 0; column < 4; ++column){
+                board[row][column] = Integer.parseInt(numbers.get(row*4+column));
+            }
+        }
     }
 
     private void init() {
