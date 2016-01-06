@@ -1,4 +1,4 @@
-package org.gocd;
+package org.k2;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
