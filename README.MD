@@ -11,6 +11,7 @@
 `success`	
 
 		{
+		    "name"   : "{whoami}"
 	    	"result" : "ok",
 	    	"status" : "0,0,0,0,0,0,2,0,4,0,0,0,0,0,0,0"
 		}
@@ -33,6 +34,7 @@
 `success`	
 
 		{
+		    "name"   : "{whoami}"
 	    	"result" : "ok",
 	    	"status" : "2, 4, 8, 16, 0, 0, 0, 0, 2, 4, 8, 16, 0, 0, 0, 0"
 		}
@@ -40,6 +42,7 @@
 `failure`
 		
 		{
+		    "name"   : "{whoami}"
 	    	"result" : "failed",
 	    	"status" : "2, 4, 8, 16, 0, 0, 0, 0, 2, 4, 8, 16, 0, 0, 0, 0",
 	    	"message" : " xxxx xxx"
