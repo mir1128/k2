@@ -2,6 +2,7 @@
 *.ipr
 *.iws
 *.iml
+*.ids
 .gradle/
 out/
 target/
