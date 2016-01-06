@@ -1,4 +1,4 @@
-package org.k2;
+package org.k2.model;
 
 public class Point {
     private int x;

@@ -1,4 +1,4 @@
-package org.k2;
+package org.k2.model;
 
 import java.util.ArrayList;
 import java.util.List;
