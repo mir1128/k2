@@ -15,35 +15,23 @@ public class UserBoardStatus implements Serializable {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    @Column(name = "name")
-    private String  name;
+    @JoinColumn(name = "user_id")
+    private User  player;
 
     @Column(name = "status")
     private String  status;
 
-    @Column(name = "created_at")
-    private Date    createdAt;
-
-    public UserBoardStatus(String name, Date createdAt, String status) {
-        this.name = name;
-        this.createdAt = createdAt;
+    public UserBoardStatus(User player, String status) {
+        this.player = player;
         this.status = status;
     }
 
-    public String getName() {
-        return name;
+    public User getPlayer() {
+        return player;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setPlayer(User player) {
+        this.player = player;
     }
 
     public String getStatus() {
@@ -52,6 +40,14 @@ public class UserBoardStatus implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
 
