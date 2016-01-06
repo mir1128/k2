@@ -4,7 +4,7 @@ apply plugin: 'maven'
 apply plugin: 'idea'
 apply plugin: 'jetty'
 
-group = 'org.gocd'
+group = 'org.k2'
 version = '1.0-SNAPSHOT'
 
 description = """2048 game"""
@@ -23,5 +23,6 @@ dependencies {
     compile 'log4j:log4j:1.2.17'
     compile 'org.hibernate:hibernate-entitymanager:5.0.6.Final'
     compile 'mysql:mysql-connector-java:5.1.38'
+    compile 'com.mchange:c3p0:0.9.5'
     testCompile 'junit:junit:4.12'
 }
