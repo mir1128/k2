@@ -13,3 +13,14 @@ CREATE TABLE user_board_status (
   CONSTRAINT user_board_status_pk PRIMARY KEY (id),
   CONSTRAINT user_board_status_fk_1 FOREIGN KEY (user_id) REFERENCES user (id)
 );
+
+DROP TABLE IF EXISTS `user_score_record`;
+CREATE TABLE user_score_record (
+  id      VARCHAR(36)  NOT NULL,
+  user_id VARCHAR(36)  NOT NULL,
+  score   INTEGER,
+  update_at DATETIME,
+  CONSTRAINT user_score_record_pk PRIMARY KEY (id),
+  CONSTRAINT user_score_record_fk_1 FOREIGN KEY (user_id) REFERENCES user (id)
+);
+

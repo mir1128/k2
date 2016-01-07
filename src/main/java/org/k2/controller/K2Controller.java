@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class K2Controller {
@@ -27,6 +24,20 @@ public class K2Controller {
     @RequestMapping(value = "/move/{direction}", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> move(@PathVariable("direction") @DirectionValidation String direction) {
+
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(value = "/score/{user}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<String> getScore(@PathVariable("user") @UserNameValidation String user) {
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/scores", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<String> getScores(@RequestParam("offset") int offset, @RequestParam("size") int size) {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

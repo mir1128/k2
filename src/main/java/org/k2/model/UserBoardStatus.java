@@ -4,7 +4,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 @Entity
 @Table(name = "user_board_status")
@@ -16,22 +15,22 @@ public class UserBoardStatus implements Serializable {
     private String id;
 
     @JoinColumn(name = "user_id")
-    private User  player;
+    private User user;
 
     @Column(name = "status")
     private String  status;
 
     public UserBoardStatus(User player, String status) {
-        this.player = player;
+        this.user = player;
         this.status = status;
     }
 
-    public User getPlayer() {
-        return player;
+    public User getUser() {
+        return user;
     }
 
-    public void setPlayer(User player) {
-        this.player = player;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getStatus() {
