@@ -27,7 +27,7 @@
 
 **request:**
 
-	/turn/{direction}
+	/move/{direction}
 
 **response:**
 
