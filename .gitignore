@@ -8,3 +8,4 @@ out/
 target/
 build/
 gradlew.bat
+node_modules/
