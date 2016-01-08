@@ -14,14 +14,18 @@ public class UserScoreRecord {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "status")
+    @Column(name = "score")
     private int  score;
 
     @Column(name = "update_at")
     private Date updateAt;
+
+    public UserScoreRecord() {
+    }
 
     public UserScoreRecord(User player, int score, Date updateAt) {
         this.user = player;

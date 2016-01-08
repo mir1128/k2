@@ -1,8 +1,9 @@
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE user (
-  id        VARCHAR(36) NOT NULL,
-  create_at DATETIME,
-  CONSTRAINT user PRIMARY KEY (id)
+  id         VARCHAR(36) NOT NULL,
+  name       VARCHAR(36) NOT NULL,
+  created_at DATETIME,
+  CONSTRAINT user_pk PRIMARY KEY (id)
 );
 
 DROP TABLE IF EXISTS `user_board_status`;
@@ -16,9 +17,9 @@ CREATE TABLE user_board_status (
 
 DROP TABLE IF EXISTS `user_score_record`;
 CREATE TABLE user_score_record (
-  id      VARCHAR(36)  NOT NULL,
-  user_id VARCHAR(36)  NOT NULL,
-  score   INTEGER,
+  id        VARCHAR(36) NOT NULL,
+  user_id   VARCHAR(36) NOT NULL,
+  score     INTEGER,
   update_at DATETIME,
   CONSTRAINT user_score_record_pk PRIMARY KEY (id),
   CONSTRAINT user_score_record_fk_1 FOREIGN KEY (user_id) REFERENCES user (id)

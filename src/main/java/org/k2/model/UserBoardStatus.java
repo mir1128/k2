@@ -3,22 +3,25 @@ package org.k2.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "user_board_status")
-public class UserBoardStatus implements Serializable {
+public class UserBoardStatus {
 
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "status")
     private String  status;
+
+    public UserBoardStatus() {
+    }
 
     public UserBoardStatus(User player, String status) {
         this.user = player;
@@ -43,10 +46,6 @@ public class UserBoardStatus implements Serializable {
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 }
 
