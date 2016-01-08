@@ -42,6 +42,7 @@ flyway {
 dependencies {
     compile 'org.springframework:spring-webmvc:4.2.3.RELEASE'
     compile 'org.springframework.data:spring-data-jpa:1.9.0.RELEASE'
+    compile 'org.springframework:spring-test:4.2.3.RELEASE'
     compile 'javax.transaction:jta:1.1'
     compile 'jstl:jstl:1.2'
     compile 'javax.servlet:javax.servlet-api:3.1.0'
@@ -52,6 +53,7 @@ dependencies {
     compile 'org.hibernate:hibernate-validator:5.2.2.Final'
     compile 'javax.validation:validation-api:1.1.0.Final'
     testCompile 'junit:junit:4.12'
+    testCompile 'com.github.dreamhead:moco-core:0.10.2'
 }
 
 idea {
