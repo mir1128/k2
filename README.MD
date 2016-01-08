@@ -23,7 +23,7 @@
 	    	"message" : " xxxx alread used."
 		}
 	
-## /turn  移动方式
+## /move  移动方式
 
 **request:**
 
@@ -48,6 +48,53 @@
 	    	"message" : " xxxx xxx"
 		}
 
+## scores 获取某个用户分数
 
 
+**request:**
+
+	/score/{user}
+	
+**response:**
+	
+	{
+		"name" : "user",
+		"score" : "5000"
+	}
+
+
+## scores 获取一页用户分数	
+
+**request:**
+	
+	/scores?offset=1&size=10
+
+**response:**	
+	
+	{
+		[
+			{"beibei" : "1234"},
+			{"jignjing" : "1212"},
+			{"huanhuan" : "3212"},
+			{"yingying" : "4320"},
+			{"nini" : "50000"}					
+		]
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
