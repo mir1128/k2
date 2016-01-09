@@ -36,7 +36,7 @@ public class K2Controller {
         }
     }
 
-    @RequestMapping(value = "/register/{who}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/reset/{who}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @Transactional
     public ResponseEntity<BoardInfo> reset(@PathVariable("who") @UserNameValidation String who) {
