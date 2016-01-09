@@ -27,10 +27,10 @@ public class UserScoreRecord {
     public UserScoreRecord() {
     }
 
-    public UserScoreRecord(User player, int score, Date updateAt) {
-        this.user = player;
+    public UserScoreRecord(User user, int score) {
+        this.user = user;
         this.score = score;
-        this.updateAt = updateAt;
+        this.updateAt = new Date();
     }
 
     public String getId() {

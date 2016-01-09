@@ -23,8 +23,8 @@ public class UserBoardStatus {
     public UserBoardStatus() {
     }
 
-    public UserBoardStatus(User player, String status) {
-        this.user = player;
+    public UserBoardStatus(User user, String status) {
+        this.user = user;
         this.status = status;
     }
 

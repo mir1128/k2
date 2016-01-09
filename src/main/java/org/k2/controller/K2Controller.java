@@ -1,6 +1,8 @@
 package org.k2.controller;
 
+import org.k2.model.IK2ChessBoard;
 import org.k2.model.User;
+import org.k2.service.K2BoardService;
 import org.k2.service.UserService;
 import org.k2.validation.DirectionValidation;
 import org.k2.validation.UserNameValidation;
@@ -10,20 +12,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class K2Controller {
     @Autowired
-    UserService userService;
+    private UserService userService;
+
+    @Autowired
+    private K2BoardService k2BoardService;
 
     @RequestMapping(value = "/register/{who}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
+    @Transactional
     public ResponseEntity<RegisterInfo> register(@PathVariable("who") @UserNameValidation String who) {
         try {
             User user = userService.persistUser(who);
-            RegisterInfo registerInfo = new RegisterInfo(user.getName(), true, "");
-            return new ResponseEntity<>(registerInfo, HttpStatus.CREATED);
+            IK2ChessBoard board = k2BoardService.createNewChessBoard(user);
+            return new ResponseEntity<>(new RegisterInfo(user.getName(), true, board.getCurrentStatus()), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
