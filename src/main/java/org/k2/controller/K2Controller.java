@@ -1,5 +1,7 @@
 package org.k2.controller;
 
+import org.k2.exception.ConflictException;
+import org.k2.exception.NotFoundException;
 import org.k2.model.IK2ChessBoard;
 import org.k2.model.User;
 import org.k2.service.K2BoardService;
@@ -15,7 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 public class K2Controller {
     @Autowired
     private UserService userService;
@@ -24,50 +26,61 @@ public class K2Controller {
     private K2BoardService k2BoardService;
 
     @RequestMapping(value = "/register/{who}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
     @Transactional
-    public ResponseEntity<BoardInfo> register(@PathVariable("who") @UserNameValidation String who) {
+    public BoardInfo register(@PathVariable("who") @UserNameValidation String who) throws ConflictException {
+        User user = null;
         try {
-            User user = userService.persistUser(who);
-            IK2ChessBoard board = k2BoardService.createNewChessBoard(user);
-            return new ResponseEntity<>(new BoardInfo(user.getName(), true, board.getCurrentStatus()), HttpStatus.CREATED);
+            user = userService.persistUser(who);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            throw new ConflictException(e.getMessage());
         }
+        IK2ChessBoard board = k2BoardService.createNewChessBoard(user);
+        return new BoardInfo(user.getName(), true, board.getCurrentStatus());
     }
 
     @RequestMapping(value = "/reset/{who}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
     @Transactional
-    public ResponseEntity<BoardInfo> reset(@PathVariable("who") @UserNameValidation String who) {
+    public BoardInfo reset(@PathVariable("who") @UserNameValidation String who) throws NotFoundException {
         try {
             User user = userService.getUser(who);
             IK2ChessBoard board = k2BoardService.resetUserChessBoard(user);
-            return new ResponseEntity<>(new BoardInfo(user.getName(), true, board.getCurrentStatus()), HttpStatus.OK);
+            return new BoardInfo(user.getName(), true, board.getCurrentStatus());
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new NotFoundException("not found");
         }
     }
 
     @RequestMapping(value = "/move/{direction}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
     public ResponseEntity<String> move(@PathVariable("direction") @DirectionValidation String direction) {
 
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/score/{user}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
     public ResponseEntity<String> getScore(@PathVariable("user") @UserNameValidation String user) {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/scores", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
     public ResponseEntity<String> getScores(@RequestParam("offset") int offset, @RequestParam("size") int size) {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public String handleNotFoundException(NotFoundException ex) {
+        return ex.getMessage();
+    }
+
+    @ExceptionHandler(ConflictException.class)
+    @ResponseStatus(value = HttpStatus.CONFLICT)
+    @ResponseBody
+    public String handleConflictException(ConflictException ex) {
+        return ex.getMessage();
+    }
 }
+
 

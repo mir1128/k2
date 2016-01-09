@@ -4,6 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.k2.exception.ConflictException;
+import org.k2.exception.NotFoundException;
 import org.k2.model.User;
 import org.k2.service.UserRepository;
 import org.k2.viewmodel.BoardInfo;
@@ -30,13 +32,13 @@ public class K2ControllerTest implements ApplicationContextAware {
 
     private UserRepository userRepository = null;
 
-    private ResponseEntity<BoardInfo> helloCreateResponse = null;
-
     private final String helloUser = "hello";
 
+    private BoardInfo boardInfo;
+
     @Before
-    public void createHelloUser() {
-        helloCreateResponse = k2Controller.register(helloUser);
+    public void createHelloUser() throws ConflictException {
+        boardInfo = k2Controller.register(helloUser);
     }
 
     @After
@@ -47,22 +49,13 @@ public class K2ControllerTest implements ApplicationContextAware {
 
     @Test
     public void should_register_success() throws Exception {
-        try {
-            assertEquals(helloCreateResponse.getStatusCode(), HttpStatus.CREATED);
-        } catch (Exception e) {
-            assertFalse(true);
-        }
+        assertEquals(boardInfo.getName(), helloUser);
     }
 
     @Test
     public void should_be_able_to_reset_board() throws Exception {
-        ResponseEntity<BoardInfo> resetResponseEntity = null;
-        try {
-            resetResponseEntity = k2Controller.reset(helloUser);
-            assertEquals(resetResponseEntity.getStatusCode(), HttpStatus.OK);
-        } catch (Exception e) {
-            assertFalse(true);
-        }
+        BoardInfo resetBoardInfo = k2Controller.reset(helloUser);
+        assertEquals(resetBoardInfo.getName(), helloUser);
     }
 
     @Test
