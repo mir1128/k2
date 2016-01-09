@@ -1,9 +1,10 @@
-package org.k2;
+package org.k2.controller;
 
-import org.k2.service.UserBoardStatusRepository;
+import org.k2.model.User;
 import org.k2.service.UserService;
 import org.k2.validation.DirectionValidation;
 import org.k2.validation.UserNameValidation;
+import org.k2.viewmodel.RegisterInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,13 +19,14 @@ public class K2Controller {
 
     @RequestMapping(value = "/register/{who}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<String> register(@PathVariable("who") @UserNameValidation String who) {
+    public ResponseEntity<RegisterInfo> register(@PathVariable("who") @UserNameValidation String who) {
         try {
-            userService.persistUser(who);
+            User user = userService.persistUser(who);
+            RegisterInfo registerInfo = new RegisterInfo(user.getName(), true, "");
+            return new ResponseEntity<>(registerInfo, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/move/{direction}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

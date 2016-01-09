@@ -2,12 +2,9 @@ package org.k2.controller;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.k2.K2Controller;
 import org.k2.model.User;
 import org.k2.service.UserRepository;
-import org.k2.service.UserService;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.k2.viewmodel.RegisterInfo;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -19,7 +16,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/applicationContext.xml"})
@@ -36,7 +32,7 @@ public class K2ControllerTest implements ApplicationContextAware {
     public void should_register_success() throws Exception {
         String who = "hello";
 
-        ResponseEntity<String> responseEntity = null;
+        ResponseEntity<RegisterInfo> responseEntity = null;
         try {
             responseEntity =  k2Controller.register(who);
             assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);

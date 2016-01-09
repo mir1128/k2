@@ -11,11 +11,11 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public void persistUser(String who) throws Exception {
+    public User persistUser(String who) throws Exception {
         if (userRepository.findByName(who) != null) {
             throw new Exception("already exist!");
         }
-        userRepository.save(new User(who, new Date()));
+        return userRepository.save(new User(who, new Date()));
     }
 }
 
