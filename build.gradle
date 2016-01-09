@@ -56,6 +56,7 @@ dependencies {
     testCompile 'com.github.dreamhead:moco-core:0.10.2'
     testCompile 'javax.el:javax.el-api:3.0.1-b04'
     testCompile 'org.glassfish.web:javax.el:2.2.6'
+    testCompile 'org.mockito:mockito-all:2.0.2-beta'
 }
 
 idea {

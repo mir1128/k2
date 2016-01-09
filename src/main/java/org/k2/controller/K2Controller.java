@@ -1,6 +1,7 @@
 package org.k2;
 
 import org.k2.service.UserBoardStatusRepository;
+import org.k2.service.UserService;
 import org.k2.validation.DirectionValidation;
 import org.k2.validation.UserNameValidation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +13,17 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class K2Controller {
     @Autowired
-    UserBoardStatusRepository userBoardStatusRepository;
+    UserService userService;
 
     @RequestMapping(value = "/register/{who}", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> register(@PathVariable("who") @UserNameValidation String who) {
 
+        try {
+            userService.persistUser(who);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
