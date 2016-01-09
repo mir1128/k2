@@ -22,6 +22,21 @@
 	    	"result" : "failed"
 	    	"message" : " xxxx alread used."
 		}
+
+## /reset 重置
+
+**request:**
+
+	/reset/{whoami}
+	
+**response:**
+
+		{
+		    "name"   : "{whoami}"
+	    	"result" : "ok",
+	    	"status" : "0,0,0,0,0,0,2,0,4,0,0,0,0,0,0,0"
+		}
+	
 	
 ## /move  移动方式
 
