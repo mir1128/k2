@@ -11,6 +11,14 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    public User getUser(String who) throws Exception {
+        User user = userRepository.findByName(who);
+        if (user == null) {
+            throw new Exception("not exist!");
+        }
+        return user;
+    }
+
     public User persistUser(String who) throws Exception {
         if (userRepository.findByName(who) != null) {
             throw new Exception("already exist!");

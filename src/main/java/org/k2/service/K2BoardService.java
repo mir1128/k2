@@ -22,6 +22,16 @@ public class K2BoardService {
         userScoreRecordRepository.save(new UserScoreRecord(user, 0));
         return board;
     }
+
+    public IK2ChessBoard resetUserChessBoard(User user) {
+        IK2ChessBoard board = boardFactory.createNewChessBoard();
+
+        UserBoardStatus userBoardStatus = userBoardStatusRepository.findByUser(user);
+        userBoardStatus.setStatus(board.getCurrentStatus());
+        userBoardStatusRepository.save(userBoardStatus);
+
+        return board;
+    }
 }
 
 

@@ -6,7 +6,7 @@ import org.k2.service.K2BoardService;
 import org.k2.service.UserService;
 import org.k2.validation.DirectionValidation;
 import org.k2.validation.UserNameValidation;
-import org.k2.viewmodel.RegisterInfo;
+import org.k2.viewmodel.BoardInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,13 +26,26 @@ public class K2Controller {
     @RequestMapping(value = "/register/{who}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @Transactional
-    public ResponseEntity<RegisterInfo> register(@PathVariable("who") @UserNameValidation String who) {
+    public ResponseEntity<BoardInfo> register(@PathVariable("who") @UserNameValidation String who) {
         try {
             User user = userService.persistUser(who);
             IK2ChessBoard board = k2BoardService.createNewChessBoard(user);
-            return new ResponseEntity<>(new RegisterInfo(user.getName(), true, board.getCurrentStatus()), HttpStatus.CREATED);
+            return new ResponseEntity<>(new BoardInfo(user.getName(), true, board.getCurrentStatus()), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
+
+    @RequestMapping(value = "/register/{who}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @Transactional
+    public ResponseEntity<BoardInfo> reset(@PathVariable("who") @UserNameValidation String who) {
+        try {
+            User user = userService.getUser(who);
+            IK2ChessBoard board = k2BoardService.resetUserChessBoard(user);
+            return new ResponseEntity<>(new BoardInfo(user.getName(), true, board.getCurrentStatus()), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

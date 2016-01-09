@@ -1,10 +1,12 @@
 package org.k2.controller;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.k2.model.User;
 import org.k2.service.UserRepository;
-import org.k2.viewmodel.RegisterInfo;
+import org.k2.viewmodel.BoardInfo;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -28,25 +30,39 @@ public class K2ControllerTest implements ApplicationContextAware {
 
     private UserRepository userRepository = null;
 
+    private ResponseEntity<BoardInfo> helloCreateResponse = null;
+
+    private final String helloUser = "hello";
+
+    @Before
+    public void createHelloUser() {
+        helloCreateResponse = k2Controller.register(helloUser);
+    }
+
+    @After
+    public void deleteHellUser() {
+        User user = userRepository.findByName(helloUser);
+        userRepository.delete(user);
+    }
+
     @Test
     public void should_register_success() throws Exception {
-        String who = "hello";
-
-        ResponseEntity<RegisterInfo> responseEntity = null;
         try {
-            responseEntity =  k2Controller.register(who);
-            assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);
+            assertEquals(helloCreateResponse.getStatusCode(), HttpStatus.CREATED);
         } catch (Exception e) {
             assertFalse(true);
-        } finally {
-            User user = userRepository.findByName(who);
-            userRepository.delete(user);
         }
     }
 
     @Test
-    public void testMove() throws Exception {
-
+    public void should_be_able_to_reset_board() throws Exception {
+        ResponseEntity<BoardInfo> resetResponseEntity = null;
+        try {
+            resetResponseEntity = k2Controller.reset(helloUser);
+            assertEquals(resetResponseEntity.getStatusCode(), HttpStatus.OK);
+        } catch (Exception e) {
+            assertFalse(true);
+        }
     }
 
     @Test
