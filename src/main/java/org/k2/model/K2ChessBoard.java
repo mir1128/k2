@@ -3,12 +3,11 @@ package org.k2.model;
 import javafx.util.Pair;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 public class K2ChessBoard implements IK2ChessBoard {
     private final int WIDTH = 4;
-    private int[][] board = new int[WIDTH][WIDTH];
+    private int[] board = new int[WIDTH * WIDTH];
 
     private IGenerateNumberStrategy numberGenerator;
 
@@ -18,22 +17,23 @@ public class K2ChessBoard implements IK2ChessBoard {
             int row = random.nextInt(WIDTH - 1);
             int column = random.nextInt(WIDTH - 1);
 
-            board[row][column] = random.nextBoolean() ? 2 : 4;
+            board[row * WIDTH + column] = random.nextBoolean() ? 2 : 4;
         }
     }
 
     public K2ChessBoard(String boardString) {
-        List<String> numbers = Arrays.asList(boardString.split(","));
-        for (int row = 0; row < WIDTH; ++row) {
-            for (int column = 0; column < WIDTH; ++column) {
-                board[row][column] = Integer.parseInt(numbers.get(row * WIDTH + column));
-            }
-        }
+        board = Arrays.stream(boardString.substring(1, boardString.length() - 1).split(","))
+                .map(String::trim).mapToInt(Integer::parseInt).toArray();
     }
 
     @Override
     public Pair<String, Integer> move(MoveDirection moveDirection) {
         return null;
+    }
+
+    @Override
+    public String getCurrentStatus() {
+        return Arrays.toString(board).replace(" ", "");
     }
 
     @Override
