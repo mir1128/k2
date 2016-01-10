@@ -1,5 +1,6 @@
 package org.k2.controller;
 
+import org.codehaus.jackson.map.annotate.JsonView;
 import org.k2.exception.ConflictException;
 import org.k2.exception.NotFoundException;
 import org.k2.model.IK2ChessBoard;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 

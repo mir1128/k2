@@ -16,7 +16,7 @@ public class BoardInfo {
         return name;
     }
 
-    public boolean isResult() {
+    public boolean getResult() {
         return result;
     }
 
