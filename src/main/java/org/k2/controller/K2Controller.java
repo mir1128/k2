@@ -5,17 +5,23 @@ import org.k2.exception.ConflictException;
 import org.k2.exception.NotFoundException;
 import org.k2.model.IK2ChessBoard;
 import org.k2.model.User;
+import org.k2.model.UserScoreRecord;
 import org.k2.service.K2BoardService;
+import org.k2.service.UserScoreService;
 import org.k2.service.UserService;
 import org.k2.validation.DirectionValidation;
 import org.k2.validation.UserNameValidation;
 import org.k2.viewmodel.BoardInfo;
+import org.k2.viewmodel.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class K2Controller {
@@ -24,6 +30,9 @@ public class K2Controller {
 
     @Autowired
     private K2BoardService k2BoardService;
+
+    @Autowired
+    private UserScoreService userScoreService;
 
     @RequestMapping(value = "/register/{who}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
@@ -57,15 +66,19 @@ public class K2Controller {
     }
 
     @RequestMapping(value = "/score/{user}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getScore(@PathVariable("user") @UserNameValidation String user) {
-
-        return new ResponseEntity<>(HttpStatus.OK);
+    public UserInfo getScore(@PathVariable("user") @UserNameValidation String who) throws Exception {
+        User user = userService.getUser(who);
+        int userScore = userScoreService.getUserScore(user);
+        return new UserInfo(who, userScore);
     }
 
     @RequestMapping(value = "/scores", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getScores(@RequestParam("offset") int offset, @RequestParam("size") int size) {
+    public List<UserInfo> getScores(@RequestParam("offset") int offset, @RequestParam("size") int size) {
+        List<UserScoreRecord> userScoreRecords = userScoreService.getUserScores(offset, size);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return userScoreRecords.stream()
+                .map(record -> new UserInfo(record.getUser().getName(), record.getScore()))
+                .collect(Collectors.toList());
     }
 
     @ExceptionHandler(NotFoundException.class)
