@@ -50,15 +50,16 @@
 
 		{
 		    "name"   : "{whoami}"
-	    	"result" : "ok",
-	    	"status" : "2, 4, 8, 16, 0, 0, 0, 0, 2, 4, 8, 16, 0, 0, 0, 0"
+	    	"result" : true,
+	    	"status" : "2, 4, 8, 16, 0, 0, 0, 0, 2, 4, 8, 16, 0, 0, 0, 0",
+	    	"message" : "move succeed."
 		}
 
 `failure`
 		
 		{
 		    "name"   : "{whoami}"
-	    	"result" : "failed",
+	    	"result" : false,
 	    	"status" : "2, 4, 8, 16, 0, 0, 0, 0, 2, 4, 8, 16, 0, 0, 0, 0",
 	    	"message" : " xxxx xxx"
 		}
