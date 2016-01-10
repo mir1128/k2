@@ -17,10 +17,12 @@ CREATE TABLE user_board_status (
 
 DROP TABLE IF EXISTS `user_score_record`;
 CREATE TABLE user_score_record (
-  id        VARCHAR(36) NOT NULL,
-  user_id   VARCHAR(36) NOT NULL,
-  score     INTEGER,
-  update_at DATETIME,
+  id                   VARCHAR(36) NOT NULL,
+  user_id              VARCHAR(36) NOT NULL,
+  score                INTEGER,
+  update_at            DATETIME,
+  max_score            INTEGER,
+  max_score_created_at DATETIME,
   CONSTRAINT user_score_record_pk PRIMARY KEY (id),
   CONSTRAINT user_score_record_fk_1 FOREIGN KEY (user_id) REFERENCES user (id)
 );

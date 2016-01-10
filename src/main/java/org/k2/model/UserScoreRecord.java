@@ -24,6 +24,12 @@ public class UserScoreRecord {
     @Column(name = "update_at")
     private Date updateAt;
 
+    @Column(name = "max_score")
+    private int  scoreMax;
+
+    @Column(name = "max_score_created_at")
+    private Date maxScoreCreatedAt;
+
     public UserScoreRecord() {
     }
 
@@ -31,6 +37,8 @@ public class UserScoreRecord {
         this.user = user;
         this.score = score;
         this.updateAt = new Date();
+        this.maxScoreCreatedAt = new Date();
+        this.scoreMax = 0;
     }
 
     public String getId() {
@@ -59,5 +67,28 @@ public class UserScoreRecord {
 
     public void setUpdateAt(Date updateAt) {
         this.updateAt = updateAt;
+    }
+
+    public int getScoreMax() {
+        return scoreMax;
+    }
+
+    public void setScoreMax(int scoreMax) {
+        this.scoreMax = scoreMax;
+    }
+
+    public Date getMaxScoreCreatedAt() {
+        return maxScoreCreatedAt;
+    }
+
+    public void setMaxScoreCreatedAt(Date maxScoreCreatedAt) {
+        this.maxScoreCreatedAt = maxScoreCreatedAt;
+    }
+
+    public void updateMaxScore(int increase) {
+        if (score + increase > scoreMax) {
+            scoreMax = score + increase;
+            maxScoreCreatedAt = new Date();
+        }
     }
 }

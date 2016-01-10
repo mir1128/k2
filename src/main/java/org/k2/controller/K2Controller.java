@@ -1,9 +1,12 @@
 package org.k2.controller;
 
+import javafx.util.Pair;
 import org.codehaus.jackson.map.annotate.JsonView;
 import org.k2.exception.ConflictException;
+import org.k2.exception.MoveException;
 import org.k2.exception.NotFoundException;
 import org.k2.model.IK2ChessBoard;
+import org.k2.model.MoveDirection;
 import org.k2.model.User;
 import org.k2.model.UserScoreRecord;
 import org.k2.service.K2BoardService;
@@ -12,6 +15,7 @@ import org.k2.service.UserService;
 import org.k2.validation.DirectionValidation;
 import org.k2.validation.UserNameValidation;
 import org.k2.viewmodel.BoardInfo;
+import org.k2.viewmodel.MoveInfo;
 import org.k2.viewmodel.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,10 +63,12 @@ public class K2Controller {
         }
     }
 
-    @RequestMapping(value = "/move/{direction}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> move(@PathVariable("direction") @DirectionValidation String direction) {
-
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    @RequestMapping(value = "/move/{who}/{direction}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Transactional
+    public MoveInfo move(@PathVariable("who") @UserNameValidation String who,
+                                       @PathVariable("direction") @DirectionValidation String direction) throws Exception {
+        Pair<String, Integer> move = k2BoardService.move(who, MoveDirection.valueOf(direction));
+        return new MoveInfo(who, true, move.getKey(), "move succeed.");
     }
 
     @RequestMapping(value = "/score/{user}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -83,16 +89,20 @@ public class K2Controller {
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    @ResponseBody
     public String handleNotFoundException(NotFoundException ex) {
         return ex.getMessage();
     }
 
     @ExceptionHandler(ConflictException.class)
     @ResponseStatus(value = HttpStatus.CONFLICT)
-    @ResponseBody
     public String handleConflictException(ConflictException ex) {
         return ex.getMessage();
+    }
+
+    @ExceptionHandler(MoveException.class)
+    @ResponseStatus(value = HttpStatus.CONFLICT)
+    public MoveInfo handleMoveException(MoveException ex) {
+        return new MoveInfo(ex.getName(), false, ex.getStatus(), ex.getMessage());
     }
 }
 
