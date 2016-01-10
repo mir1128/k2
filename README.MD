@@ -86,15 +86,13 @@
 
 **response:**	
 	
-	{
-		[
-			{"beibei" : "1234"},
-			{"jignjing" : "1212"},
-			{"huanhuan" : "3212"},
-			{"yingying" : "4320"},
-			{"nini" : "50000"}					
-		]
-	}
+	[
+		{"beibei" : "1234"},
+		{"jignjing" : "1212"},
+		{"huanhuan" : "3212"},
+		{"yingying" : "4320"},
+		{"nini" : "50000"}					
+	]
 	
 	
 	
