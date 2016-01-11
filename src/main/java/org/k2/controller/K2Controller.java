@@ -3,6 +3,7 @@ package org.k2.controller;
 import javafx.util.Pair;
 import org.codehaus.jackson.map.annotate.JsonView;
 import org.k2.exception.ConflictException;
+import org.k2.exception.GameOverException;
 import org.k2.exception.MoveException;
 import org.k2.exception.NotFoundException;
 import org.k2.model.IK2ChessBoard;
@@ -66,7 +67,7 @@ public class K2Controller {
     @RequestMapping(value = "/move/{who}/{direction}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     public MoveInfo move(@PathVariable("who") @UserNameValidation String who,
-                                       @PathVariable("direction") @DirectionValidation String direction) throws Exception {
+                                       @PathVariable("direction") @DirectionValidation String direction) throws Exception, GameOverException {
         Pair<String, Integer> move = k2BoardService.move(who, MoveDirection.valueOf(direction));
         return new MoveInfo(who, true, move.getKey(), "move succeed.");
     }
@@ -103,6 +104,12 @@ public class K2Controller {
     @ResponseStatus(value = HttpStatus.CONFLICT)
     public MoveInfo handleMoveException(MoveException ex) {
         return new MoveInfo(ex.getName(), false, ex.getStatus(), ex.getMessage());
+    }
+
+    @ExceptionHandler(GameOverException.class)
+    @ResponseStatus(value = HttpStatus.CONFLICT)
+    public String handleGameOver(GameOverException ex) {
+        return ex.getMessage();
     }
 }
 

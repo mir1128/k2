@@ -1,6 +1,7 @@
 package org.k2.service;
 
 import javafx.util.Pair;
+import org.k2.exception.GameOverException;
 import org.k2.exception.NotFoundException;
 import org.k2.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class K2BoardService {
         return board;
     }
 
-    public Pair<String, Integer> move(String who, MoveDirection direction) throws Exception {
+    public Pair<String, Integer> move(String who, MoveDirection direction) throws Exception, GameOverException {
         User user = userService.getUser(who);
         UserBoardStatus userBoardStatus = userBoardStatusRepository.findByUser(user);
         if (userBoardStatus == null) {
