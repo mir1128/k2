@@ -37,7 +37,7 @@ public class K2ChessBoard implements IK2ChessBoard {
         int score = 0;
         switch (moveDirection) {
             case Up:
-                score  = moveUp();
+                score = moveUp();
                 break;
             case Down:
                 score = moveDown();
@@ -54,7 +54,7 @@ public class K2ChessBoard implements IK2ChessBoard {
 
         int nextPosition = findNextPosition();
         if (nextPosition == -1) {
-            throw  new GameOverException("Game Over");
+            throw new GameOverException("Game Over");
         }
         board[nextPosition] = numberGenerator.getNextNumber();
 
@@ -209,7 +209,7 @@ public class K2ChessBoard implements IK2ChessBoard {
         }
 
         Random random = new Random();
-        int n = random.nextInt(notNullIndex.size()-1);
+        int n = random.nextInt(notNullIndex.size() - 1);
         return notNullIndex.get(n);
     }
 }
