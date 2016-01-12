@@ -3,6 +3,7 @@ package org.k2.model;
 import javafx.beans.WeakInvalidationListener;
 import javafx.util.Pair;
 import org.k2.exception.GameOverException;
+import org.k2.exception.InvalidMoveException;
 import org.springframework.data.repository.query.Param;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -32,8 +33,9 @@ public class K2ChessBoard implements IK2ChessBoard {
     }
 
     @Override
-    public Pair<String, Integer> move(MoveDirection moveDirection) throws GameOverException {
-        Pair<String, Integer> result = null;
+    public Pair<String, Integer> move(MoveDirection moveDirection) throws GameOverException, InvalidMoveException {
+        String prevStatus = getCurrentStatus();
+
         int score = 0;
         switch (moveDirection) {
             case Up:
@@ -50,6 +52,10 @@ public class K2ChessBoard implements IK2ChessBoard {
                 break;
             default:
                 break;
+        }
+
+        if (prevStatus == getCurrentStatus()) {
+            throw new InvalidMoveException("invalid move");
         }
 
         int nextPosition = findNextPosition();
@@ -197,20 +203,20 @@ public class K2ChessBoard implements IK2ChessBoard {
     }
 
     private int findNextPosition() {
-        List<Integer> notNullIndex = new ArrayList<>();
+        List<Integer> nullIndex = new ArrayList<>();
         for (int i = 0; i < board.length; ++i) {
-            if (board[i] != 0) {
-                notNullIndex.add(i);
+            if (board[i] == 0) {
+                nullIndex.add(i);
             }
         }
 
-        if (notNullIndex.size() == 0) {
+        if (nullIndex.size() == 0) {
             return -1;
         }
 
         Random random = new Random();
-        int n = random.nextInt(notNullIndex.size() - 1);
-        return notNullIndex.get(n);
+        int n = random.nextInt(nullIndex.size() - 1);
+        return nullIndex.get(n);
     }
 }
 

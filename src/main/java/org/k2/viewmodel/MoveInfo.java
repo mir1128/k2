@@ -5,12 +5,14 @@ public class MoveInfo {
     private boolean result;
     private String status;
     private String message;
+    private int score;
 
-    public MoveInfo(String name, boolean result, String status, String message) {
+    public MoveInfo(String name, boolean result, String status, String message, int score) {
         this.name = name;
         this.result = result;
         this.status = status;
         this.message = message;
+        this.score = score;
     }
 
     public String getName() {
@@ -43,5 +45,13 @@ public class MoveInfo {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

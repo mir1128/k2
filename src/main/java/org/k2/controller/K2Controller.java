@@ -2,10 +2,7 @@ package org.k2.controller;
 
 import javafx.util.Pair;
 import org.codehaus.jackson.map.annotate.JsonView;
-import org.k2.exception.ConflictException;
-import org.k2.exception.GameOverException;
-import org.k2.exception.MoveException;
-import org.k2.exception.NotFoundException;
+import org.k2.exception.*;
 import org.k2.model.IK2ChessBoard;
 import org.k2.model.MoveDirection;
 import org.k2.model.User;
@@ -29,6 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping(value = "/api")
 public class K2Controller {
     @Autowired
     private UserService userService;
@@ -67,9 +65,10 @@ public class K2Controller {
     @RequestMapping(value = "/move/{who}/{direction}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     public MoveInfo move(@PathVariable("who") @UserNameValidation String who,
-                                       @PathVariable("direction") @DirectionValidation String direction) throws Exception, GameOverException {
+                                       @PathVariable("direction") @DirectionValidation String direction)
+            throws Exception, GameOverException, InvalidMoveException {
         Pair<String, Integer> move = k2BoardService.move(who, MoveDirection.valueOf(direction));
-        return new MoveInfo(who, true, move.getKey(), "move succeed.");
+        return new MoveInfo(who, true, move.getKey(), "move succeed.", move.getValue());
     }
 
     @RequestMapping(value = "/score/{user}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -103,12 +102,18 @@ public class K2Controller {
     @ExceptionHandler(MoveException.class)
     @ResponseStatus(value = HttpStatus.CONFLICT)
     public MoveInfo handleMoveException(MoveException ex) {
-        return new MoveInfo(ex.getName(), false, ex.getStatus(), ex.getMessage());
+        return new MoveInfo(ex.getName(), false, ex.getStatus(), ex.getMessage(), -1);
     }
 
     @ExceptionHandler(GameOverException.class)
     @ResponseStatus(value = HttpStatus.CONFLICT)
     public String handleGameOver(GameOverException ex) {
+        return ex.getMessage();
+    }
+
+    @ExceptionHandler(InvalidMoveException.class)
+    @ResponseStatus(value = HttpStatus.CONFLICT)
+    public String handleInvalidMove(InvalidMoveException ex) {
         return ex.getMessage();
     }
 }
