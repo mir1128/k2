@@ -4,7 +4,7 @@
 
 **request:**
 
-	/register/{whoami}
+	/api/register/{whoami}
 
 **response:**
 	
@@ -27,7 +27,7 @@
 
 **request:**
 
-	/reset/{whoami}
+	/api/reset/{whoami}
 	
 **response:**
 
@@ -42,7 +42,7 @@
 
 **request:**
 
-	/move/{direction}
+	/api/move/{direction}
 
 **response:**
 
@@ -52,7 +52,8 @@
 		    "name"   : "{whoami}"
 	    	"result" : true,
 	    	"status" : "2, 4, 8, 16, 0, 0, 0, 0, 2, 4, 8, 16, 0, 0, 0, 0",
-	    	"message" : "move succeed."
+	    	"message" : "move succeed.",
+	    	"score" : 16
 		}
 
 `failure`
@@ -61,7 +62,8 @@
 		    "name"   : "{whoami}"
 	    	"result" : false,
 	    	"status" : "2, 4, 8, 16, 0, 0, 0, 0, 2, 4, 8, 16, 0, 0, 0, 0",
-	    	"message" : " xxxx xxx"
+	    	"message" : " xxxx xxx",
+	    	"score" : -1
 		}
 
 ## scores 获取某个用户分数
@@ -69,7 +71,7 @@
 
 **request:**
 
-	/score/{user}
+	/api/score/{user}
 	
 **response:**
 	
@@ -83,7 +85,7 @@
 
 **request:**
 	
-	/scores?offset=1&size=10
+	/api/scores?offset=1&size=10
 
 **response:**	
 	
