@@ -19089,12 +19089,13 @@ var Rank = React.createClass({
             dataType: 'json',
             cache: false,
             success: function (data) {
-                var convertedData = data.map(function (entry) {
-                    return { 'name': Object.keys(entry)[0], 'score': entry[Object.keys(entry)[0]] };
-                }).sort(function (a, b) {
-                    return b.score - a.score;
-                });
-                this.setState({ data: convertedData });
+                // var convertedData = data.map(function (entry) {
+                //         return {'name': Object.keys(entry)[0], 'score': entry[Object.keys(entry)[0]]};
+                //     })
+                //     .sort(function (a, b) {
+                //         return b.score - a.score;
+                //     });
+                this.setState({ data: data });
             }.bind(this),
             error: function (xhr, status, err) {}.bind(this)
         });
@@ -19122,10 +19123,10 @@ var Rank = React.createClass({
                     React.createElement(
                         'b',
                         null,
-                        entry.score
+                        entry.name
                     ),
                     ' - ',
-                    entry.name
+                    entry.score
                 );
             })
         );

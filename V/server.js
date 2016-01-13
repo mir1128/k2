@@ -46,7 +46,7 @@ app.post('/k2/api/move/:name/:direction', function(req, res) {
 });
 
 app.get('/k2/api/scores', function(req, res) {
-  retStr = '[{"beibei" : "1234"},{"jignjing" : "1212"},{"huanhuan" : "3212"},{"yingying" : "4320"},{"nini" : "50000"}]';
+  retStr = '[{"name":"ggg7","score":40},{"name":"ggg5","score":16},{"name":"ggg6","score":12},{"name":"aaa4","score":0},{"name":"ggg8","score":0},{"name":"ggg4","score":0},{"name":"aaa3","score":0},{"name":"ggg9","score":0},{"name":"aaa2","score":0},{"name":"aaa1","score":0}]';
   res.json(JSON.parse(retStr));
 });
 

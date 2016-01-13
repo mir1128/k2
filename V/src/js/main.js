@@ -138,13 +138,13 @@ var Rank = React.createClass({
             dataType: 'json',
             cache: false,
             success: function (data) {
-                var convertedData = data.map(function (entry) {
-                        return {'name': Object.keys(entry)[0], 'score': entry[Object.keys(entry)[0]]};
-                    })
-                    .sort(function (a, b) {
-                        return b.score - a.score;
-                    });
-                this.setState({data: convertedData});
+                // var convertedData = data.map(function (entry) {
+                //         return {'name': Object.keys(entry)[0], 'score': entry[Object.keys(entry)[0]]};
+                //     })
+                //     .sort(function (a, b) {
+                //         return b.score - a.score;
+                //     });
+                this.setState({data: data});
             }.bind(this),
             error: function (xhr, status, err) {
             }.bind(this)
@@ -162,7 +162,7 @@ var Rank = React.createClass({
             <div className="list-group">
                 <a href="#" className="list-group-item active">Rank</a>
                 {this.state.data.map(function (entry) {
-                    return <div key={entry.name} className="list-group-item"><b>{entry.score}</b> - {entry.name}</div>;
+                    return <div key={entry.name} className="list-group-item"><b>{entry.name}</b> - {entry.score}</div>;
                 })}
             </div>
         );
