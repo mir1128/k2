@@ -19085,7 +19085,7 @@ var Rank = React.createClass({
 
     loadCommentsFromServer: function () {
         $.ajax({
-            url: '/k2/api/scores',
+            url: '/k2/api/scores?offset=0&size=10',
             dataType: 'json',
             cache: false,
             success: function (data) {
