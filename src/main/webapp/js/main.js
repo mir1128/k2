@@ -24,7 +24,6 @@ var Form = React.createClass({
                     this.setState({available: true});
                     console.log('error');
                 }
-                
             }.bind(this)
         });
     },
@@ -82,7 +81,7 @@ var Grid = React.createClass({
                                 return <div className="grid-row">
                                     {
                                         [0, 1, 2, 3].map(function (j) {
-                                            return <div className="grid-cell">{matrix[i * 4 + j]}</div>;
+                                            return <div className="grid-cell">{matrix[i * 4 + j] == 0 ? ' ' : matrix[i * 4 + j]}</div>;
                                         })
                                     }
                                 </div>

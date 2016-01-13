@@ -19032,7 +19032,7 @@ var Grid = React.createClass({
                                 return React.createElement(
                                     'div',
                                     { className: 'grid-cell' },
-                                    matrix[i * 4 + j]
+                                    matrix[i * 4 + j] == 0 ? ' ' : matrix[i * 4 + j]
                                 );
                             })
                         );
