@@ -37,9 +37,9 @@ app.post('/api/register/:name', function(req, res) {
   }
 });
 
-app.post('/api/move/:direction', function(req, res) {
+app.post('/api/move/:name/:direction', function(req, res) {
     ret = {};
-    ret['name'] = req.query.name;
+    ret['name'] = req.params.name;
     ret['result'] = 'ok',
     ret['status'] = '2, 4, 8, 16, 0, 0, 0, 0, 2, 4, 8, 16, 0, 0, 0, 0';
     res.json(ret);
