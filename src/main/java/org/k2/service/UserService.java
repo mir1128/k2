@@ -1,5 +1,6 @@
 package org.k2.service;
 
+import org.k2.exception.NotFoundException;
 import org.k2.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ public class UserService {
     public User getUser(String who) throws Exception {
         User user = userRepository.findByName(who);
         if (user == null) {
-            throw new Exception("not exist!");
+            throw new NotFoundException("user not exist!");
         }
         return user;
     }

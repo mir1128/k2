@@ -13,6 +13,7 @@ import org.k2.service.UserService;
 import org.k2.validation.DirectionValidation;
 import org.k2.validation.UserNameValidation;
 import org.k2.viewmodel.BoardInfo;
+import org.k2.viewmodel.CheckInfo;
 import org.k2.viewmodel.MoveInfo;
 import org.k2.viewmodel.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +87,12 @@ public class K2Controller {
         return userScoreRecords.stream()
                 .map(record -> new UserInfo(record.getUser().getName(), record.getScore()))
                 .collect(Collectors.toList());
+    }
+
+    @RequestMapping(value = "/check/{who}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public CheckInfo check(@PathVariable("who") String who) throws Exception {
+        User user = userService.getUser(who);
+        return new CheckInfo(true);
     }
 
     @ExceptionHandler(NotFoundException.class)
