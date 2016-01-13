@@ -99,7 +99,7 @@ var GameColumn = React.createClass({
         if (typeof keyMap[event.keyCode] === 'undefined') return;
         $.ajax({
             type: 'POST',
-            url: '/api/move/' + keyMap[event.keyCode] + '?name=' + this.state.name,
+            url: '/api/move/' + this.state.name + '/' + keyMap[event.keyCode] ,
             dataType: 'json',
             cache: false,
             success: function (data) {
