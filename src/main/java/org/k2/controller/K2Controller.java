@@ -67,7 +67,7 @@ public class K2Controller {
     public MoveInfo move(@PathVariable("who") @UserNameValidation String who,
                                        @PathVariable("direction") @DirectionValidation String direction)
             throws Exception, GameOverException, InvalidMoveException {
-        String camelDirection = direction.substring(0).toUpperCase() + direction.substring(1).toLowerCase();
+        String camelDirection = direction.substring(0, 1).toUpperCase() + direction.substring(1).toLowerCase();
         Pair<String, Integer> move = k2BoardService.move(who, MoveDirection.valueOf(camelDirection));
         return new MoveInfo(who, true, move.getKey(), "move succeed.", move.getValue());
     }
