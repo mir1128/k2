@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 var names = [];
 
-app.get('/k2/api/register/check/:name', function(req, res) {
+app.get('/k2/api/check/:name', function(req, res) {
   if (names.indexOf(req.params.name) == -1) {
     res.json({'result':true});
   } else {

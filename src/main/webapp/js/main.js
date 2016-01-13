@@ -9,7 +9,7 @@ var Form = React.createClass({
     handleNameChange: function (e) {
         if (e.target.value == '') return;
         $.ajax({
-            url: '/k2/api/register/check/' + e.target.value,
+            url: '/k2/api/check/' + e.target.value,
             dataType: 'json',
             cache: false,
             success: function (data) {
