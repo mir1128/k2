@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 var names = [];
 
-app.get('/api/register/check/:name', function(req, res) {
+app.get('/k2/api/register/check/:name', function(req, res) {
   if (names.indexOf(req.params.name) == -1) {
     res.json({'result':true});
   } else {
@@ -22,7 +22,7 @@ app.get('/api/register/check/:name', function(req, res) {
   }
 });
 
-app.post('/api/register/:name', function(req, res) {
+app.post('/k2/api/register/:name', function(req, res) {
   ret = {};
   if (names.indexOf(req.params.name) == -1) {
     names.push(req.params.name);
@@ -37,7 +37,7 @@ app.post('/api/register/:name', function(req, res) {
   }
 });
 
-app.post('/api/move/:name/:direction', function(req, res) {
+app.post('/k2/api/move/:name/:direction', function(req, res) {
     ret = {};
     ret['name'] = req.params.name;
     ret['result'] = 'ok',
@@ -45,7 +45,7 @@ app.post('/api/move/:name/:direction', function(req, res) {
     res.json(ret);
 });
 
-app.get('/api/scores', function(req, res) {
+app.get('/k2/api/scores', function(req, res) {
   retStr = '[{"beibei" : "1234"},{"jignjing" : "1212"},{"huanhuan" : "3212"},{"yingying" : "4320"},{"nini" : "50000"}]';
   res.json(JSON.parse(retStr));
 });
