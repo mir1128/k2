@@ -9,7 +9,7 @@ public class BoardInfo {
     public BoardInfo(String name, boolean result, String status) {
         this.name = name;
         this.result = result;
-        this.status = status;
+        this.status = status.substring(1, status.length()-1);
     }
 
     public String getName() {

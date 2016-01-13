@@ -10,7 +10,7 @@ public class MoveInfo {
     public MoveInfo(String name, boolean result, String status, String message, int score) {
         this.name = name;
         this.result = result;
-        this.status = status;
+        this.status = status.substring(1, status.length()-1);
         this.message = message;
         this.score = score;
     }
