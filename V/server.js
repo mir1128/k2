@@ -16,9 +16,9 @@ var names = [];
 
 app.get('/k2/api/check/:name', function(req, res) {
   if (names.indexOf(req.params.name) == -1) {
-    res.json({'result':true});
+    res.status(404).end();
   } else {
-    res.json({'result':false});
+    res.status(200).json('OK');
   }
 });
 

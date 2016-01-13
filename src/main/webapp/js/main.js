@@ -13,12 +13,18 @@ var Form = React.createClass({
             dataType: 'json',
             cache: false,
             success: function (data) {
+                console.log('success');
                 this.setState({name: e.target.value});
-                this.setState({available: data.result});
+                this.setState({available: false});
                 console.log(this.state)
             }.bind(this),
             error: function (xhr, status, err) {
-                //
+                if(xhr.status==404) {
+                    this.setState({name: e.target.value});
+                    this.setState({available: true});
+                    console.log('error');
+                }
+                
             }.bind(this)
         });
     },
