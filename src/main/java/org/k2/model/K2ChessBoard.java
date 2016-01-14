@@ -215,7 +215,7 @@ public class K2ChessBoard implements IK2ChessBoard {
         }
 
         Random random = new Random();
-        int n = random.nextInt(nullIndex.size() - 1);
+        int n = random.nextInt(nullIndex.size());
         return nullIndex.get(n);
     }
 }
