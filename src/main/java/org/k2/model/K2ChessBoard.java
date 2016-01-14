@@ -1,15 +1,13 @@
 package org.k2.model;
 
-import javafx.beans.WeakInvalidationListener;
 import javafx.util.Pair;
 import org.k2.exception.GameOverException;
 import org.k2.exception.InvalidMoveException;
-import org.springframework.data.repository.query.Param;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class K2ChessBoard implements IK2ChessBoard {
     private final int WIDTH = 4;
@@ -54,15 +52,16 @@ public class K2ChessBoard implements IK2ChessBoard {
                 break;
         }
 
-        if (prevStatus == getCurrentStatus()) {
+        if (prevStatus.equals(getCurrentStatus())) {
             throw new InvalidMoveException("invalid move");
         }
 
         int nextPosition = findNextPosition();
-        if (nextPosition == -1) {
+        board[nextPosition] = numberGenerator.getNextNumber();
+
+        if (isGameOver()) {
             throw new GameOverException("Game Over");
         }
-        board[nextPosition] = numberGenerator.getNextNumber();
 
         return new Pair<>(getCurrentStatus(), score);
     }
@@ -217,6 +216,25 @@ public class K2ChessBoard implements IK2ChessBoard {
         Random random = new Random();
         int n = random.nextInt(nullIndex.size());
         return nullIndex.get(n);
+    }
+
+    private boolean isGameOver() {
+        for (int row = 0; row < WIDTH; ++row) {
+            for (int column = 0; column < WIDTH; ++column) {
+                try {
+                    if ( (board[row * WIDTH + column] != 0)
+                            && (board[row * WIDTH + column] == board[row * WIDTH + column + 1]
+                            || board[row * WIDTH + column] == board[row * WIDTH + column - 1]
+                            || board[row * WIDTH + column] == board[(row-1) * WIDTH + column]
+                            || board[row * WIDTH + column] == board[(row+1) * WIDTH + column])) {
+                        return false;
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    continue;
+                }
+            }
+        }
+        return true;
     }
 }
 
