@@ -219,14 +219,19 @@ public class K2ChessBoard implements IK2ChessBoard {
     }
 
     private boolean isGameOver() {
+        int noneZeroCount = Arrays.stream(board).filter(n -> n != 0).sum();
+        if (noneZeroCount != WIDTH * WIDTH) {
+            return false;
+        }
+
         for (int row = 0; row < WIDTH; ++row) {
             for (int column = 0; column < WIDTH; ++column) {
                 try {
-                    if ( (board[row * WIDTH + column] != 0)
+                    if ((board[row * WIDTH + column] != 0)
                             && (board[row * WIDTH + column] == board[row * WIDTH + column + 1]
                             || board[row * WIDTH + column] == board[row * WIDTH + column - 1]
-                            || board[row * WIDTH + column] == board[(row-1) * WIDTH + column]
-                            || board[row * WIDTH + column] == board[(row+1) * WIDTH + column])) {
+                            || board[row * WIDTH + column] == board[(row - 1) * WIDTH + column]
+                            || board[row * WIDTH + column] == board[(row + 1) * WIDTH + column])) {
                         return false;
                     }
                 } catch (IndexOutOfBoundsException e) {
